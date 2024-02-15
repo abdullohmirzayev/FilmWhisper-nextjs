@@ -4,7 +4,8 @@ import { IMovie } from "../../interfaces/app.interface";
 import Image from "next/image";
 import { image_base } from "../../helpers/constants";
 import { TbPlayerPlay } from "react-icons/tb";
-import ReactStars from "react-stars";
+import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 const Hero = ({ trending }: HeroProps): JSX.Element => {
   const [movie, setMovie] = useState<IMovie>({} as IMovie);
@@ -19,21 +20,23 @@ const Hero = ({ trending }: HeroProps): JSX.Element => {
       <div className="absolute top-0 -z-10 left-0 h-[95vh] w-full">
         <Image
           src={`${image_base}${movie?.backdrop_path || movie?.poster_path}`}
-          alt={movie.title}
+          alt={movie?.name || "movie-image"}
           fill
           className="object-cover"
         />
       </div>
 
-      <div className="py-[4px] px-[8px] text-center rounded-bl-[8px] rounded-tr-[8px] bg-[#1d1d1d]/50  w-[111px]">{movie.media_type}</div>
+      <div className="py-[4px] px-[8px] text-center rounded-bl-[8px] rounded-tr-[8px] bg-[#e5e5e5]/50  w-[111px]">
+        {movie.media_type}
+      </div>
 
       <div className="flex item-center space-x-2">
-        <ReactStars
-          edit={false}
-          count={10}
-          value={movie.vote_average}
-          color2={"#fff"}
-        />
+        {Array.from({ length: Math.floor(movie.vote_average) }, (_, i) => (
+          <StarIcon key={i} className="h-4 w-4 text-gray-400" />
+        ))}
+        {Array.from({ length: 10 - Math.floor(movie.vote_average) }, (_, i) => (
+          <StarIconOutline key={i} className="h-4 w-4 text-gray-400" />
+        ))}
         <p>({movie.vote_count})</p>
       </div>
 

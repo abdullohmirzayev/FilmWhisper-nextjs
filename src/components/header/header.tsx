@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
 import { BiBellMinus } from "react-icons/bi";
 
-const Header = () => {
+const Header = (): JSX.Element => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
