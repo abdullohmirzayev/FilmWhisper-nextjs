@@ -3,7 +3,7 @@ import { RowProps } from "./row.props";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import Thumbnail from "../thumbnail/thumbnail";
 
-const Row = ({ title, movies }: RowProps) => {
+const Row = ({ title, movies, isBig = false }: RowProps) => {
   const [moved, setMoved] = useState<boolean>(false);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +26,7 @@ const Row = ({ title, movies }: RowProps) => {
   };
 
   return (
-    <div className="space-y-1 md:space-y-2">
+    <div className="h-[600px] space-y-1 md:space-y-2">
       <h2 className="w-56 cursor-pointer text-sm md:text-2xl font-semibold text-[#e5e5e5] hover:text-white transition duration-200">
         {title}
       </h2>
@@ -42,10 +42,12 @@ const Row = ({ title, movies }: RowProps) => {
 
         <div
           ref={carouselRef}
-          className="flex scrollbar-hide items-center space-x-1 overflow-x-scroll overflow-hidden md:space-x-2"
+          className={`flex scrollbar-hide items-center ${
+            !isBig && "space-x-1 md:space-x-4"
+          } overflow-hidden overflow-x-scroll`}
         >
           {movies.map((movie) => (
-            <Thumbnail key={movie.id} movie={movie} />
+            <Thumbnail key={movie.id} movie={movie} isBig={isBig} />
           ))}
         </div>
 
