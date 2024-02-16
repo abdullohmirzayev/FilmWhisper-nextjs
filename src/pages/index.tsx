@@ -26,13 +26,13 @@ export default function Home({
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
         <Hero trending={trending} />
         <section>
-          <Row title="Top Rated" movies={topRated.reverse()} />
+          <Row title="Top Rated" movies={topRated} />
           <Row title="TV Show" movies={tvTopRated} isBig={true} />
-          <Row title="Popular" movies={popular} />
+          <Row title="Popular" movies={popular.reverse()} />
           <Row title="Documentary" movies={documentary} isBig={true} />
-          <Row title="Comedy" movies={comedy.reverse()} />
+          <Row title="Comedy" movies={comedy} />
           <Row title="Family" movies={family} />
-          <Row title="History" movies={history.reverse()} isBig={true} />
+          <Row title="History" movies={history} isBig={true} />
         </section>
       </main>
     </div>

@@ -1,24 +1,33 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TextField } from "../components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { AuthContext } from "../context/auth.context";
 
 const Auth = () => {
   const [auth, setAuth] = useState<"signup" | "signin">("signin");
+  const { error, isLoading, logout, signIn, signUp } = useContext(AuthContext);
+
   const toggleAuth = (state: "signup" | "signin") => {
     setAuth(state);
   };
 
-  const onsubmit = (formData: { email: string; password: string }) => {};
+  const onSubmit = (formData: { email: string; password: string }) => {
+    if (auth === "signup") {
+      signUp(formData.email, formData.password)
+    } else {
+      signIn(formData.email, formData.password)
+    }
+  };
 
   const validation = Yup.object({
     email: Yup.string()
       .email("Enter valid email")
       .required("Email is required"),
     password: Yup.string()
-      .min(4, "4 minimum character")
+      .min(6, "6 minimum character")
       .required("Password is required"),
   });
 
@@ -47,22 +56,25 @@ const Auth = () => {
       />
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={onsubmit}
+        onSubmit={onSubmit}
         validationSchema={validation}
       >
         <Form className="relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14">
           <h1 className="text-4xl font-semibold">
             {auth === "signup" ? "Sign Up" : "Sign In"}
           </h1>
+          {error && (
+            <p className="text-red-500 font-semibold text-center">{error}</p>
+          )}
           <div className=" space-y-4">
             <TextField name="email" placeholder="Email" type="text" />
             <TextField name="password" placeholder="Password" type="password" />
           </div>
-          <button
+          <button disabled={isLoading}
             type="submit"
             className="w-full bg-[#E10856] py-3 font-semibold mt-5"
           >
-            {auth === "signup" ? "Sign Up" : "Sign In"}
+            {isLoading ? 'Loading...' : auth === "signup" ? "Sign Up" : "Sign In"}
           </button>
           {auth === "signin" ? (
             <div className="text-[gray] text-center">
