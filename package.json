@@ -9,6 +9,9 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.3",
+		"@emotion/styled": "^11.11.0",
+		"@mui/material": "^5.15.10",
 		"@next/font": "13.1.6",
 		"firebase": "^9.17.1",
 		"formik": "^2.2.9",

@@ -21,4 +21,7 @@
 	.input {
 		@apply w-full rounded bg-[#333] px-5 py-4 placeholder-[gray] outline-none focus:bg-[#454545];
 	}
+	.modalButton {
+		@apply flex items-center justify-center rounded-full hover:bg-[#181818]/80 transition-all
+	}
 }

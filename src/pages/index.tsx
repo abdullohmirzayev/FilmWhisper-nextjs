@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useContext } from 'react';
-import { Header, Hero, Row } from 'src/components';
+import { Header, Hero, Modal, Row } from 'src/components';
 import { AuthContext } from 'src/context/auth.context';
 import { IMovie } from 'src/interfaces/app.interface';
 import { API_REQUEST } from 'src/services/api.service';
@@ -44,19 +44,22 @@ export default function Home({
 					<Row title='Comedy' movies={comedy.reverse()} />
 				</section>
 			</main>
+			{modal && <Modal />}
 		</div>
 	);
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-	const trending = await fetch(API_REQUEST.trending).then(res => res.json());
-	const topRated = await fetch(API_REQUEST.top_rated).then(res => res.json());
-	const tvTopRated = await fetch(API_REQUEST.tv_top_rated).then(res => res.json());
-	const popular = await fetch(API_REQUEST.popular).then(res => res.json());
-	const documentary = await fetch(API_REQUEST.documentary).then(res => res.json());
-	const comedy = await fetch(API_REQUEST.comedy).then(res => res.json());
-	const family = await fetch(API_REQUEST.family).then(res => res.json());
-	const history = await fetch(API_REQUEST.history).then(res => res.json());
+	const [trending, topRated, tvTopRated, popular, documentary, comedy, family, history,] = await Promise.all([
+		fetch(API_REQUEST.trending).then(res => res.json()),
+		fetch(API_REQUEST.top_rated).then(res => res.json()),
+		fetch(API_REQUEST.tv_top_rated).then(res => res.json()),
+		fetch(API_REQUEST.popular).then(res => res.json()),
+		fetch(API_REQUEST.documentary).then(res => res.json()),
+		fetch(API_REQUEST.comedy).then(res => res.json()),
+		fetch(API_REQUEST.family).then(res => res.json()),
+		fetch(API_REQUEST.history).then(res => res.json()),
+	])
 
 	return {
 		props: {
