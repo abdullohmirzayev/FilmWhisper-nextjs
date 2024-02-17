@@ -12,7 +12,7 @@ const Thumbnail = ({ movie, isBig = false }: ThumbnailProps) => {
 		>
 			<Image
 				src={`${image_base}${movie?.backdrop_path || movie?.poster_path}`}
-				alt={movie.title}
+				alt={movie.original_name || 'image'}
 				fill
 				className='rounded-sm md:rounded object-cover'
 			/>

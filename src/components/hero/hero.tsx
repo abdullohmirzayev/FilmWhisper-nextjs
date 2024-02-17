@@ -6,7 +6,7 @@ import { HeroProps } from './hero.props';
 import { TbPlayerPlay } from 'react-icons/tb';
 import ReactStars from 'react-stars';
 
-const Hero = ({ trending }: HeroProps): JSX.Element => {
+const Hero = ({ trending }: HeroProps) => {
 	const [movie, setMovie] = useState<IMovie>({} as IMovie);
 
 	useEffect(() => {
@@ -19,7 +19,7 @@ const Hero = ({ trending }: HeroProps): JSX.Element => {
 			<div className='absolute top-0 left-0 -z-10 h-[95vh] w-full'>
 				<Image
 					src={`${image_base}${movie?.backdrop_path || movie?.poster_path}`}
-					alt={movie.title}
+					alt={movie?.backdrop_path || 'bg-image'}
 					fill
 					className='object-cover'
 				/>
