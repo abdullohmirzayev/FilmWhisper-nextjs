@@ -3,6 +3,8 @@ import { Header, Hero, Row } from "../components";
 import { API_REQUEST } from "../services/api.service";
 import { GetServerSideProps } from "next";
 import { IMovie } from "../interfaces/app.interface";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth.context";
 
 export default function Home({
   trending,
@@ -14,6 +16,11 @@ export default function Home({
   family,
   history,
 }: HomeProps): JSX.Element {
+
+  const { isLoading } = useContext(AuthContext)
+
+  if (isLoading) return <>{null}</>
+
   return (
     <div className="relative min-h-screen">
       <Head>

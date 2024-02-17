@@ -17,9 +17,9 @@ export const AuthContext = createContext<AuthContextState>({
   user: null,
   error: "",
   isLoading: false,
-  signIn: async () => {},
-  signUp: async () => {},
-  logout: async () => {},
+  signIn: async () => { },
+  signUp: async () => { },
+  logout: async () => { },
 });
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
@@ -50,24 +50,21 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     [user, isLoading, error]
   );
 
-  useEffect(
-    () =>
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setIsLoading(false);
-          setUser(user);
-        } else {
-          setUser(null);
-          setIsLoading(true);
-          router.push("/auth");
-        }
-        setIsLoading(false);
-        setInitialLoader(false);
-      }),
-
-    // eslint-disable-next-line
+  useEffect(() => onAuthStateChanged(auth, user => {
+    if (user) {
+      setIsLoading(false)
+      setUser(user)
+    } else {
+      setUser(null)
+      setIsLoading(true)
+      router.push('/auth')
+    }
+    setIsLoading(false)
+    setInitialLoader(false)
+  }),
+    // eslint-disale-next-iine
     []
-  );
+  )
 
   return (
     <AuthContext.Provider value={value}>
