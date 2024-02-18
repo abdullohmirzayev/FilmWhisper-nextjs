@@ -1,6 +1,6 @@
 import MuiModal from "@mui/material/Modal";
 import { useInfoStore } from "src/store";
-import { FaTimes, FaPlay } from "react-icons/fa";
+import { FaTimes, FaPlay, FaPause } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Element } from "src/interfaces/app.interface";
 import ReactPlayer from "react-player";
@@ -13,6 +13,7 @@ const Modal = () => {
   const [trailer, setTrailer] = useState<string>("");
   const [muted, setMuted] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
+  const [playing, setPlaying] = useState<boolean>(false)
 
   const base_url = process.env.NEXT_PUBLIC_API_DOMAIN as string;
   const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
@@ -60,15 +61,24 @@ const Modal = () => {
             url={`https://www.youtube.com/watch?v=${trailer}`}
             width={"100%"}
             height={"100%"}
-            playing
+            playing={playing}
             style={{ position: "absolute", top: 0, left: 0 }}
             muted={muted}
           />
           <div className=" absolute bottom-10 flex w-full items-center justify-between px-10">
             <div className="flex space-x-2">
-              <button className=" flex items-center gap-2 rounded bg-white px-8 py-4 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
-                <FaPlay className="h-7 w-7 text-black" />
-                Play
+              <button onClick={() => setPlaying((prev) => !prev)} className=" flex items-center gap-2 rounded bg-white px-8 py-4 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
+                {playing ? (
+                  <>
+                    <FaPause className="h-7 w-7 text-black" />
+                    Pause
+                  </>
+                ) : (
+                  <>
+                    <FaPlay className="h-7 w-7 text-black" />
+                    Play
+                  </>
+                )}
               </button>
               <button className="modalButton mt-2">
                 <BiPlus className="w-7 h-7" />
