@@ -12,8 +12,8 @@ export default async function handler(
   const { method } = req;
   if (method === "POST") {
     try {
-      const { email } = req.body;
-      await stripe.customers.create({ email });
+      const { email, user_id } = req.body;
+      await stripe.customers.create({ email, metadata: { user_id } });
       return res.status(200).json({ message: "Success" });
     } catch (error) {
       const result = error as Error;
