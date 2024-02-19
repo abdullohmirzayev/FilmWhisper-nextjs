@@ -14,7 +14,7 @@ const PlanCard = ({ product }: PlanCardProps) => {
           className="rounded-xl w-full"
         />
         <p className="absolute top-0 bg-black/90 text-white font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
-          ${product.default_price.unit_amount}
+          {(product.default_price.unit_amount / 100).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
         </p>
         <div className="absolute left-0 rounded-xl right-0 bottom-0 top-0 bg-black/20 w-full h-full" />
       </div>
