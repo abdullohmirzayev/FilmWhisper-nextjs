@@ -1,8 +1,30 @@
+import { useContext, useState } from "react";
 import { AiOutlineHourglass, AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { RiVipCrown2Line } from "react-icons/ri";
+import { AuthContext } from "src/context/auth.context";
 import { PlanCardProps } from "./plan-card.props";
 
 const PlanCard = ({ product }: PlanCardProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
+
+  const onSubmitSubscription = async (priceId: string) => {
+    setIsLoading(true);
+    const payload = { email: user?.email, priceId };
+    try {
+      const response = await fetch("/api/subscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      window.open(data.subscription.url);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-sm cursor-pointer bg-white/20 px-6 pt-6 pb-2 rounded-xl shadow-lg transform hover:scale-105 transition duration-500">
       <h3 className="mb-3 text-xl font-bold text-[#E10856]">{product.name}</h3>
@@ -14,13 +36,20 @@ const PlanCard = ({ product }: PlanCardProps) => {
           className="rounded-xl w-full"
         />
         <p className="absolute top-0 bg-black/90 text-white font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
-          {(product.default_price.unit_amount / 100).toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+          {(product.default_price.unit_amount / 100).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })}
         </p>
         <div className="absolute left-0 rounded-xl right-0 bottom-0 top-0 bg-black/20 w-full h-full" />
       </div>
       <div className="border-[1px] border-white/20 mt-4" />
-      <button className="mt-4 w-full bg-[#E10856] py-4 rounded hover:opacity-80 font-semibold">
-        Buy plan
+      <button
+        onClick={() => onSubmitSubscription(product.default_price.id)}
+        className="mt-4 w-full bg-[#E10856] py-4 rounded hover:opacity-80 font-semibold"
+        disabled={isLoading}
+      >
+        {isLoading ? 'Loading...' : 'BUY PLAN'}
       </button>
       <div className="my-4 flex flex-col space-y-2">
         {product.metadata.adv.split(", ").map((c, id) => (
