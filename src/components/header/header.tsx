@@ -1,13 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AiOutlineSearch,
   AiOutlineUser,
   AiOutlineLogout,
 } from "react-icons/ai";
 import { BiBellMinus } from "react-icons/bi";
-import { AuthContext } from "src/context/auth.context";
 import { useAuth } from "src/hooks/useAuth";
 
 const Header = () => {
