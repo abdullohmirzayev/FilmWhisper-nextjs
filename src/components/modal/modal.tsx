@@ -13,13 +13,14 @@ const Modal = () => {
   const [trailer, setTrailer] = useState<string>("");
   const [muted, setMuted] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
-  const [playing, setPlaying] = useState<boolean>(false)
+  const [playing, setPlaying] = useState<boolean>(false);
 
   const base_url = process.env.NEXT_PUBLIC_API_DOMAIN as string;
   const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
 
-  const api = `${base_url}/${currentMovie?.media_type === "tv" ? "tv" : "movie"
-    }/${currentMovie.id}/videos?api_key=${api_key}&language=en-US`;
+  const api = `${base_url}/${
+    currentMovie?.media_type === "tv" ? "tv" : "movie"
+  }/${currentMovie.id}/videos?api_key=${api_key}&language=en-US`;
 
   const handleClose = () => {
     setModal(false);
@@ -67,7 +68,10 @@ const Modal = () => {
           />
           <div className=" absolute bottom-10 flex w-full items-center justify-between px-10">
             <div className="flex space-x-2">
-              <button onClick={() => setPlaying((prev) => !prev)} className=" flex items-center gap-2 rounded bg-white px-8 py-4 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
+              <button
+                onClick={() => setPlaying((prev) => !prev)}
+                className=" flex items-center gap-2 rounded bg-white px-8 py-4 text-xl font-bold text-black transition hover:bg-[#e6e6e6]"
+              >
                 {playing ? (
                   <>
                     <FaPause className="h-7 w-7 text-black" />
@@ -93,38 +97,40 @@ const Modal = () => {
                   <AiFillLike className="w-7 h-7" />
                 )}
               </button>
-              <button
-                className="modalButton mt-2"
-                onClick={() => setMuted((prev) => !prev)}
-              >
-                {muted ? (
-                  <BsVolumeMute className="w-7 h-7" />
-                ) : (
-                  <BsVolumeDown className="w-7 h-7" />
-                )}
-              </button>
             </div>
+            <button
+              className="modalButton mt-2"
+              onClick={() => setMuted((prev) => !prev)}
+            >
+              {muted ? (
+                <BsVolumeMute className="w-7 h-7" />
+              ) : (
+                <BsVolumeDown className="w-7 h-7" />
+              )}
+            </button>
           </div>
         </div>
         <div className="flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
           <div className="space-y-6 text-1g">
-            <div className='flex items-center space-x-2 text-sm'>
-              <p className='font-semibold text-green-400'>{currentMovie!.vote_average * 10}% Match</p>
-              <p className='font-light'>{currentMovie?.release_date}</p>
+            <div className="flex items-center space-x-2 text-sm">
+              <p className="font-semibold text-green-400">
+                {currentMovie!.vote_average * 10}% Match
+              </p>
+              <p className="font-light">{currentMovie?.release_date}</p>
             </div>
-            <div className='flex flex-col gap-x-10 gap-y-4 font-light md:flex-row'>
-              <p className='w-5/6'>{currentMovie?.overview}</p>
-              <div className='flex flex-col space-y-3 text-sm'>
-                <span className='text-[gray]'>Original language :</span> {currentMovie?.original_language}
+            <div className="flex flex-col gap-x-10 gap-y-4 font-light md:flex-row">
+              <p className="w-5/6">{currentMovie?.overview}</p>
+              <div className="flex flex-col space-y-3 text-sm">
+                <span className="text-[gray]">Original language :</span>{" "}
+                {currentMovie?.original_language}
               </div>
               <>
-                <span className='text-[gray]'>Original language :</span> {currentMovie?.vote_count}
+                <span className="text-[gray]">Original language :</span>{" "}
+                {currentMovie?.vote_count}
               </>
             </div>
           </div>
         </div>
-
-
       </>
     </MuiModal>
   );
