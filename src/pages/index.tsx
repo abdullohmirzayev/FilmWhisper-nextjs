@@ -4,6 +4,9 @@ import { Header, Hero, Modal, Row, Subsriptionplan } from "src/components";
 import { IMovie, Product } from "src/interfaces/app.interface";
 import { API_REQUEST } from "src/services/api.service";
 import { useInfoStore } from "src/store";
+import { useEffect, useContext } from "react";
+import { getList } from "src/helpers/lists";
+import { AuthContext } from "src/context/auth.context";
 
 export default function Home({
   trending,
@@ -18,6 +21,12 @@ export default function Home({
   subscription,
 }: HomeProps): JSX.Element {
   const { modal } = useInfoStore();
+  // const { user } = useContext(AuthContext);
+
+  // useEffect( async () => { 
+  //   const myList = await getList(user?.uid);
+  //   console.log(myList);
+  // });
 
   if (!subscription.length) return <Subsriptionplan products={products} />;
 
