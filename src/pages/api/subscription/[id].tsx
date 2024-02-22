@@ -17,7 +17,7 @@ export default async function handler(
     const subscription = await stripe.subscriptions.list({
       limit: 1,
       customer: customer?.id,
-      expand: ['data.default_payment_method', 'data.customer']
+      expand: ['data.default_payment_method', 'data.customer.invoice_settings.default_payment_method']
     });
     return res.status(200).json({ subscription });
   }

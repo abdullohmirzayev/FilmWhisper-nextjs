@@ -44,15 +44,20 @@ export interface Subscription {
     active: boolean;
     nickname: string;
   };
-  default_payment_method: {
-    card: {
-      brand: string;
-      exp_month: number;
-      exp_year: number;
-      last4: number;
-    };
-  };
   customer: {
     email: string;
+    metadata: {
+      user_id: string
+    }
+    invoice_settings: {
+      default_payment_method: {
+        card: {
+          brand: string;
+          exp_month: number;
+          exp_year: number;
+          last4: number;
+        };
+      };
+    }
   };
 }

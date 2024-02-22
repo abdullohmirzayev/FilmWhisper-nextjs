@@ -10,8 +10,6 @@ import { API_REQUEST } from "src/services/api.service";
 import moment from "moment";
 
 const Account = ({ subscription }: AccountProps) => {
-  console.log(subscription);
-
   return (
     <>
       <Head>
@@ -44,7 +42,10 @@ const Account = ({ subscription }: AccountProps) => {
           <div className="-ml-1 flex items-center gap-x-1.5">
             <MdOutlineSubscriptions className="w-5 h-5 text-red-500" />
             <p className="text-md font-semibold text-[#555]">
-              Memer since {moment(subscription.current_period_start * 1000).format('DD MMM yyyy')}
+              Memer since{" "}
+              {moment(subscription.current_period_start * 1000).format(
+                "DD MMM yyyy"
+              )}
             </p>
           </div>
         </div>
@@ -53,7 +54,9 @@ const Account = ({ subscription }: AccountProps) => {
 
         <div className="mt-6 grid grid-cols-1 gap-x-4 border px-4 py-4 md:grid-cols-4 md:bordder-x-0 md:border-t md:border-b-0 md:pb-0">
           <h4 className="text-lg text-[gray]">Plan Details</h4>
-          <div className="col-span-2 font-medium">{subscription.plan.nickname}</div>
+          <div className="col-span-2 font-medium">
+            {subscription.plan.nickname}
+          </div>
           <p className="cursor-pointer text-blue-500 hover:underline md:text-right">
             Change Plane
           </p>
@@ -84,6 +87,15 @@ export const getServerSideProps: GetServerSideProps<AccountProps> = async ({
   const subscription = await fetch(
     `${API_REQUEST.subscription}/${user_id}`
   ).then((res) => res.json());
+
+  if (!subscription.subscription.data.length) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
