@@ -8,6 +8,7 @@ import {
 } from "react-icons/ai";
 import { BiBellMinus } from "react-icons/bi";
 import { useAuth } from "src/hooks/useAuth";
+import NavMenu from "../nav-menu/nav-menu";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -37,6 +38,8 @@ const Header = () => {
           height={56}
           className={"cursor-pointer object-contain"}
         />
+
+        <NavMenu />
 
         <ul className="space-x-4 md:flex hidden">
           <li className="navLink">Home</li>

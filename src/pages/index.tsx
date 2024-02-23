@@ -25,7 +25,7 @@ export default function Home({
 
   return (
     <div
-      className={`relative min-h-screen ${
+      className={`relative min-h-screen bg-gradient-to-b from-gray-900/70 to-[#010511] ${
         modal && "!h-screen overflow-hidden"
       }`}
     >
@@ -42,12 +42,12 @@ export default function Home({
         <section>
           <Row title="Top Rated" movies={topRated} />
           <Row title="Tv Show" movies={tvTopRated} isBig={true} />
+          <Row title="Comedy" movies={comedy} />
           {list.length ? <Row title="My List" movies={list} /> : null}
           <Row title="History" movies={history} />
           <Row title="Documentary" movies={documentary} />
           <Row title="Family" movies={family} />
           <Row title="Popular" movies={popular} isBig={true} />
-          <Row title="Comedy" movies={comedy} />
         </section>
       </main>
       {modal && <Modal />}

@@ -48,7 +48,7 @@ const Auth = () => {
         src={"https://rb.gy/p2hphi"}
         alt={"bg"}
         fill
-        className="object-cover -z-10 !hidden sm:!inline opacity-60"
+        className="object-cover -z-10 !hidden sm:!inline opacity-5"
       />
 
       <Image

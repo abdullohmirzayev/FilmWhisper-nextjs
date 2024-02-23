@@ -4,28 +4,44 @@
 
 /* html body */
 @layer base {
-	body {
-		@apply bg-[#141414] text-white !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#E10856];
-	}
+  body {
+    @apply bg-[#141414] text-white !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-[#E10856];
+  }
 
-	header {
-		@apply fixed top-0 z-50 flex w-full items-center justify-between px-4 py-4 transition-all lg:px-10;
-	}
+  header {
+    @apply fixed top-0 z-50 flex w-full items-center justify-between px-4 py-4 transition-all lg:px-10;
+  }
 }
 /* Custom class name */
 @layer components {
-	.navLink {
-		@apply cursor-pointer text-sm font-light text-[#fff] hover:text-[#b3b3b3];
-	}
+  .navLink {
+    @apply cursor-pointer text-sm font-light text-[#fff] hover:text-[#b3b3b3];
+  }
 
-	.input {
-		@apply w-full rounded bg-[#333] px-5 py-4 placeholder-[gray] outline-none focus:bg-[#454545];
-	}
-	.modalButton {
-		@apply flex h-11 w-11 items-center justify-center rounded-full border-2 border-[gray] bg-[#181818]/60 transition hover:border-white hover:bg-white/10
-	}
+  .input {
+    @apply w-full rounded bg-[#333] px-5 py-4 placeholder-[gray] outline-none focus:bg-[#454545];
+  }
+  .modalButton {
+    @apply flex h-11 w-11 items-center justify-center rounded-full border-2 border-[gray] bg-[#181818]/60 transition hover:border-white hover:bg-white/10;
+  }
 
-	.membershipLink {
-		@apply cursor-pointer text-blue-500 hover:underline
-	}
+  .membershipLink {
+    @apply cursor-pointer text-blue-500 hover:underline;
+  }
+
+  .menu {
+    @apply md:hidden;
+  }
+
+  .menu .MuiPaper-root {
+    @apply !absolute !left-0 !rounded-none !border !border-[gray] !bg-black !text-white;
+  }
+
+  .menu .MuiList-root {
+    @apply !p-0;
+  }
+
+  .menu .MuiMenuItem-root {
+    @apply !block !w-72 !py-3.5 !text-center !text-sm !font-light !text-[#b3b3b3] !transition !duration-200 first:cursor-default first:!font-normal first:!text-white hover:!bg-[#11100f];
+  }
 }
