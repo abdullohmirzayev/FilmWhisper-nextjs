@@ -6,10 +6,16 @@ import { Element } from "src/interfaces/app.interface";
 import ReactPlayer from "react-player";
 import { BiPlus } from "react-icons/bi";
 import { BsVolumeMute, BsVolumeDown } from "react-icons/bs";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import {
+  AiOutlineLike,
+  AiFillLike,
+  AiOutlineCloseCircle,
+} from "react-icons/ai";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "src/firebase";
 import { AuthContext } from "src/context/auth.context";
+import { useRouter } from "next/router";
+import { Button, IconButton, Snackbar } from "@mui/material";
 
 const Modal = () => {
   const { modal, setModal, currentMovie } = useInfoStore();
@@ -17,7 +23,22 @@ const Modal = () => {
   const [muted, setMuted] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
   const [playing, setPlaying] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useContext(AuthContext);
+  const router = useRouter();
+
+  const [open, setOpen] = useState(false);
+
+  const handleCloses = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const base_url = process.env.NEXT_PUBLIC_API_DOMAIN as string;
   const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
@@ -46,17 +67,33 @@ const Modal = () => {
   }, [currentMovie]);
 
   const addProductList = async () => {
+    setIsLoading(true);
     try {
-      const docRef = await addDoc(collection(db, "list"), {
+      await addDoc(collection(db, "list"), {
         userId: user?.uid,
         product: currentMovie,
       });
-      
-      console.log(docRef);
+      setIsLoading(false);
+      router.replace(router.asPath);
+      setOpen(true);
     } catch (e) {
       console.error("Error adding document: ", e);
+      setIsLoading(false);
     }
   };
+
+  const action = (
+    <>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloses}
+      >
+        <AiOutlineCloseCircle className="w-7 h-7" />
+      </IconButton>
+    </>
+  );
 
   return (
     <MuiModal
@@ -67,6 +104,13 @@ const Modal = () => {
       }
     >
       <>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleCloses}
+          message="Success"
+          action={action}
+        />
         <button
           onClick={() => setModal(false)}
           className="modalButton absolute right-5 top-5 !z-40 h-9 w-9 border-none bg-[#181818]"
@@ -102,7 +146,7 @@ const Modal = () => {
                 )}
               </button>
               <button onClick={addProductList} className="modalButton mt-2">
-                <BiPlus className="w-7 h-7" />
+                {isLoading ? "..." : <BiPlus className="w-7 h-7" />}
               </button>
               <button
                 className="modalButton mt-2"

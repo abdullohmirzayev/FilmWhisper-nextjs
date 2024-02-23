@@ -1,12 +1,10 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { Header, Hero, Modal, Row, Subsriptionplan } from "src/components";
-import { IMovie, Product } from "src/interfaces/app.interface";
+import { IMovie, MyList, Product } from "src/interfaces/app.interface";
 import { API_REQUEST } from "src/services/api.service";
 import { useInfoStore } from "src/store";
-import { useEffect, useContext } from "react";
 import { getList } from "src/helpers/lists";
-import { AuthContext } from "src/context/auth.context";
 
 export default function Home({
   trending,
@@ -19,14 +17,9 @@ export default function Home({
   comedy,
   products,
   subscription,
+  list,
 }: HomeProps): JSX.Element {
   const { modal } = useInfoStore();
-  // const { user } = useContext(AuthContext);
-
-  // useEffect( async () => { 
-  //   const myList = await getList(user?.uid);
-  //   console.log(myList);
-  // });
 
   if (!subscription.length) return <Subsriptionplan products={products} />;
 
@@ -49,11 +42,12 @@ export default function Home({
         <section>
           <Row title="Top Rated" movies={topRated} />
           <Row title="Tv Show" movies={tvTopRated} isBig={true} />
-          <Row title="Popular" movies={popular} isBig={true} />
-          <Row title="Documentary" movies={documentary.reverse()} />
+          {list.length ? <Row title="My List" movies={list} /> : null}
           <Row title="History" movies={history} />
+          <Row title="Documentary" movies={documentary} />
           <Row title="Family" movies={family} />
-          <Row title="Comedy" movies={comedy.reverse()} />
+          <Row title="Popular" movies={popular} isBig={true} />
+          <Row title="Comedy" movies={comedy} />
         </section>
       </main>
       {modal && <Modal />}
@@ -96,6 +90,8 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({
     fetch(`${API_REQUEST.subscription}/${user_id}`).then((res) => res.json()),
   ]);
 
+  const myList: MyList[] = await getList(user_id);
+
   return {
     props: {
       trending: trending.results,
@@ -108,6 +104,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({
       history: history.results,
       products: products.products.data,
       subscription: subscription.subscription.data,
+      list: myList.map((c) => c.product),
     },
   };
 };
@@ -123,4 +120,5 @@ interface HomeProps {
   history: IMovie[];
   products: Product[];
   subscription: string[];
+  list: IMovie[];
 }
