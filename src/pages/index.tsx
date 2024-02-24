@@ -1,6 +1,13 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { Header, Hero, Modal, Row, Subsriptionplan } from "src/components";
+import {
+  Footer,
+  Header,
+  Hero,
+  Modal,
+  Row,
+  Subsriptionplan,
+} from "src/components";
 import { IMovie, MyList, Product } from "src/interfaces/app.interface";
 import { API_REQUEST } from "src/services/api.service";
 import { useInfoStore } from "src/store";
@@ -35,6 +42,7 @@ export default function Home({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/logo.svg" />
       </Head>
+      
       <Header />
 
       <main className="relative pl-4 pb-24 lg:space-y-24 lg:pl-16">
@@ -50,6 +58,7 @@ export default function Home({
           <Row title="Popular" movies={popular} isBig={true} />
         </section>
       </main>
+      <Footer />
       {modal && <Modal />}
     </div>
   );

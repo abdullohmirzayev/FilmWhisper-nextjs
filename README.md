@@ -6,7 +6,8 @@ Full stack app with subscription plan. The customer can log in and register on t
 
 https://film-whisper.vercel.app/
 
-#Stack
+# Stack
+
 - NextJS
 - TypeScript
 - NodeJS
